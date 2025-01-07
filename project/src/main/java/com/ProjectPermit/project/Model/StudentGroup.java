@@ -1,4 +1,5 @@
 package com.ProjectPermit.project.Model;
 
-public class Student {
+public class StudentGroup {
+
 }
