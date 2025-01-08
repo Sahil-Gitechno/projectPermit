@@ -41,6 +41,13 @@ public class FacultyService {
 
             return  ResponseEntity.ok("Faculty Registered Successfully");
         }
+    public boolean authenticateFaculty(String emailId, String password) {
+        Faculty faculty = facultyRepository.findByEmailId(emailId);
+        if (faculty != null && faculty.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+    }
     }
 
 

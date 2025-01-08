@@ -1,6 +1,7 @@
 package com.ProjectPermit.project.Controller;
 
 
+import com.ProjectPermit.project.DTO.FacultyLoginRequestDTO;
 import com.ProjectPermit.project.DTO.FacultyRegistrationDTO;
 import com.ProjectPermit.project.Model.Faculty;
 import com.ProjectPermit.project.Service.FacultyService;
@@ -22,7 +23,15 @@ public class FacultyController {
     public ResponseEntity<String> registerFaculty(@RequestBody FacultyRegistrationDTO facultyRegistrationDTO){
         return facultyService.registerFaculty(facultyRegistrationDTO);
     }
-
+    @PostMapping("facultyLogin")
+    public ResponseEntity<String> login(@RequestBody FacultyRegistrationDTO loginDTO) {
+        boolean isAuthenticated = facultyService.authenticateFaculty(loginDTO.getEmailId(), loginDTO.getPassword());
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(401).body("Invalid email or password");
+        }
+    }
 
 }
 

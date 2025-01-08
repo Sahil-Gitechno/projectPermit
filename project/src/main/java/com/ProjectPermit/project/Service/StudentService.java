@@ -59,4 +59,9 @@ public class StudentService {
         int currentIndex = lastAssignedFacultyIndex.getAndUpdate(i -> (i + 1) % faculties.size());
         return faculties.get(currentIndex);
     }
+
+  /*  public String getFacultyFromCode(String groupCode) {
+
+        return facultyRepository.getFacultyFromCode(groupCode);
+    }*/
 }
