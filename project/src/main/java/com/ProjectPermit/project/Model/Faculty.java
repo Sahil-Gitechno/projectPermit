@@ -1,6 +1,7 @@
 package com.ProjectPermit.project.Model;
 import jakarta.persistence.*;
 import lombok.*;
+@Table(name = "faculty")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +11,7 @@ public class Faculty {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long facultyCode;
+        private Long facultyCode ;
 
         private String firstName;
         private String lastName;
