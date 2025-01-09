@@ -39,13 +39,19 @@ public class StudentService {
         // Save the group (which will also save the faculty reference)
         studentGroup = studentGroupRepository.save(studentGroup);
 
+        // Log the groupId to the console (as per the request)
+        System.out.println("Group ID: " + studentGroup.getGroupId());
+
         // Now assign the student group to each student and save them
         for (Student student : students) {
             // Make sure each student is properly assigned the student group with the faculty
             student.setStudentGroup(studentGroup);  // Set the group reference
             studentRepository.save(student);  // Save student
         }
+
+        // Optionally, you can return the groupId here if needed, or handle it in the controller as we discussed.
     }
+
 
 
 
@@ -58,6 +64,11 @@ public class StudentService {
         // Get the next index in a round-robin manner
         int currentIndex = lastAssignedFacultyIndex.getAndUpdate(i -> (i + 1) % faculties.size());
         return faculties.get(currentIndex);
+    }
+
+    public StudentGroup findByGroupCode(String groupCode) {
+        return studentGroupRepository.findByGroupCode(groupCode);
+
     }
 
   /*  public String getFacultyFromCode(String groupCode) {
