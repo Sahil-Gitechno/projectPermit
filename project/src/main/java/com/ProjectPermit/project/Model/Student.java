@@ -28,7 +28,7 @@ public class Student {
     private String mobileNumber;
     private String year;
     private String semester;
-    private String section;
+   // private String section;
     private String department;
 
     @ManyToOne
@@ -99,13 +99,9 @@ public class Student {
         this.semester = semester;
     }
 
-    public String getSection() {
-        return section;
-    }
 
-    public void setSection(String section) {
-        this.section = section;
-    }
+
+
 
     public String getDepartment() {
         return department;

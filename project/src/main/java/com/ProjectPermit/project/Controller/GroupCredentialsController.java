@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/projectPermit/groups")
 public class GroupCredentialsController {
@@ -13,9 +16,17 @@ public class GroupCredentialsController {
     private GroupCredentialsService groupCredentialsService;
 
     @PostMapping("/createCredentials")
-    public ResponseEntity<String> createGroupCredentials(@RequestBody GroupCredentialsRequest request) {
-        groupCredentialsService.createGroupCredentials(request.getGroupId(), request.getUsername(), request.getPassword());
-        return ResponseEntity.ok("Credentials created successfully for group " + request.getGroupId());
+    public ResponseEntity<Map<String, String>> createGroupCredentials(@RequestBody GroupCredentialsRequest request) {
+        groupCredentialsService.createGroupCredentials(request.getGroupId(), request.getUsername(), request.getPassword(), request.getConfirmPassword());
+
+        // Create a response body map
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "Credentials created successfully for group " + request.getGroupId());
+        responseBody.put("groupId", String.valueOf(request.getGroupId()));
+        responseBody.put("username", request.getUsername());
+        responseBody.put("password", request.getPassword());
+        responseBody.put("confrimPassword", request.getConfirmPassword());
+        return ResponseEntity.ok(responseBody);
     }
 
     // Create a DTO for the request body
@@ -23,8 +34,16 @@ public class GroupCredentialsController {
         private Long groupId;
         private String username;
         private String password;
-
+        private String confirmPassword;
         // Getters and setters
+
+        public String getConfirmPassword() {
+            return confirmPassword;
+        }
+
+        public void setConfirmPassword(String confirmPassword) {
+            this.confirmPassword = confirmPassword;
+        }
 
         public Long getGroupId() {
             return groupId;

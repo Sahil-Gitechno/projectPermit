@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/projectPermit/students")
 public class StudentController {
@@ -20,10 +21,11 @@ public class StudentController {
     @Autowired
     private GroupCredentialsService groupCredentialsService;
 
-    @PostMapping("/registerGroup")
 
-    public ResponseEntity<String> registerStudentGroup(@RequestBody Map<String, List<Student>> requestBody,
-                                                       @RequestParam String groupCode) {
+
+    @PostMapping("/registerGroup")
+    public ResponseEntity<Map<String, Object>> registerStudentGroup(@RequestBody Map<String, List<Student>> requestBody,
+                                                                    @RequestParam String groupCode) {
         List<Student> students = requestBody.get("students");
 
         // Call the service method
@@ -31,11 +33,18 @@ public class StudentController {
 
         // After saving, fetch the groupId by querying the group based on groupCode
         StudentGroup stdGroup = studentService.findByGroupCode(groupCode);
-        System.out.println("Group ID: " + stdGroup.getGroupId());
+        Long groupId = stdGroup.getGroupId();
 
-        // Return the response with groupId
-        return ResponseEntity.ok("Student group registered successfully. Please proceed to /projectPermit/groups/createCredentials ans Enter the groupId as " + stdGroup.getGroupId() + " to create credentials.");
+        // Prepare the response body
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("success", true);
+        responseBody.put("groupId", groupId);
+
+        // Return the JSON response
+        return ResponseEntity.ok(responseBody);
     }
+
+
 
 
 }

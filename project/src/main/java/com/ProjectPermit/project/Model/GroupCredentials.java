@@ -22,6 +22,8 @@ public class GroupCredentials {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String confirmPassword;
     @OneToOne
     @JoinColumn(name = "group_id", nullable = false, unique = true)
     private StudentGroup studentGroup;
@@ -56,5 +58,13 @@ public class GroupCredentials {
 
     public void setStudentGroup(StudentGroup studentGroup) {
         this.studentGroup = studentGroup;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

@@ -1,15 +1,18 @@
 package com.ProjectPermit.project.Service;
 
 import com.ProjectPermit.project.Model.Faculty;
+import com.ProjectPermit.project.Model.GroupCredentials;
 import com.ProjectPermit.project.Model.Student;
 import com.ProjectPermit.project.Model.StudentGroup;
 import com.ProjectPermit.project.Repository.FacultyRepository;
+import com.ProjectPermit.project.Repository.GroupCredentialsRepository;
 import com.ProjectPermit.project.Repository.StudentGroupRepository;
 import com.ProjectPermit.project.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -24,6 +27,8 @@ public class StudentService {
     @Autowired
     private FacultyRepository facultyRepository;
 
+    @Autowired
+    private GroupCredentialsRepository groupCredentialsRepository;
     // AtomicInteger to maintain the last assigned faculty index in a thread-safe manner
     private final AtomicInteger lastAssignedFacultyIndex = new AtomicInteger(0);
 
@@ -40,7 +45,7 @@ public class StudentService {
         studentGroup = studentGroupRepository.save(studentGroup);
 
         // Log the groupId to the console (as per the request)
-        System.out.println("Group ID: " + studentGroup.getGroupId());
+        System.out.println(studentGroup.getGroupId());
 
         // Now assign the student group to each student and save them
         for (Student student : students) {
@@ -51,9 +56,6 @@ public class StudentService {
 
         // Optionally, you can return the groupId here if needed, or handle it in the controller as we discussed.
     }
-
-
-
 
     private Faculty getRoundRobinAssignedFaculty() {
         List<Faculty> faculties = facultyRepository.findAll();
@@ -71,8 +73,5 @@ public class StudentService {
 
     }
 
-  /*  public String getFacultyFromCode(String groupCode) {
 
-        return facultyRepository.getFacultyFromCode(groupCode);
-    }*/
 }

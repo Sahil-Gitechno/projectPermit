@@ -1,16 +1,16 @@
 package com.ProjectPermit.project.DTO;
 
-public class FacultyLoginRequestDTO {
+public class StudentLoginDTO{
     private String username;
     private String password;
 
-    // Getters and Setters
+    // Getters and setters
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String emailId) {
-        this.username = emailId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -21,3 +21,4 @@ public class FacultyLoginRequestDTO {
         this.password = password;
     }
 }
+
