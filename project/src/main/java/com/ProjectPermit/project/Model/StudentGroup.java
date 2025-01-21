@@ -16,7 +16,7 @@ public class StudentGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long groupId;
+    private  Long groupId;
 
     @Column(unique = true, nullable = false)
     private String groupCode;
@@ -29,7 +29,7 @@ public class StudentGroup {
     @OneToMany(mappedBy = "studentGroup", cascade = CascadeType.ALL)
     private List<Student> students;
 
-    public Long getGroupId() {
+    public  Long getGroupId() {
         return groupId;
     }
 
@@ -60,5 +60,8 @@ public class StudentGroup {
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+
+
+
 }
 

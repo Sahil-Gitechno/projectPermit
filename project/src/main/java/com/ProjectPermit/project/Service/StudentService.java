@@ -1,15 +1,18 @@
 package com.ProjectPermit.project.Service;
 
 import com.ProjectPermit.project.Model.Faculty;
+import com.ProjectPermit.project.Model.GroupCredentials;
 import com.ProjectPermit.project.Model.Student;
 import com.ProjectPermit.project.Model.StudentGroup;
 import com.ProjectPermit.project.Repository.FacultyRepository;
+import com.ProjectPermit.project.Repository.GroupCredentialsRepository;
 import com.ProjectPermit.project.Repository.StudentGroupRepository;
 import com.ProjectPermit.project.Repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -24,6 +27,8 @@ public class StudentService {
     @Autowired
     private FacultyRepository facultyRepository;
 
+    @Autowired
+    private GroupCredentialsRepository groupCredentialsRepository;
     // AtomicInteger to maintain the last assigned faculty index in a thread-safe manner
     private final AtomicInteger lastAssignedFacultyIndex = new AtomicInteger(0);
 
@@ -39,15 +44,18 @@ public class StudentService {
         // Save the group (which will also save the faculty reference)
         studentGroup = studentGroupRepository.save(studentGroup);
 
+        // Log the groupId to the console (as per the request)
+        System.out.println(studentGroup.getGroupId());
+
         // Now assign the student group to each student and save them
         for (Student student : students) {
             // Make sure each student is properly assigned the student group with the faculty
             student.setStudentGroup(studentGroup);  // Set the group reference
             studentRepository.save(student);  // Save student
         }
+
+        // Optionally, you can return the groupId here if needed, or handle it in the controller as we discussed.
     }
-
-
 
     private Faculty getRoundRobinAssignedFaculty() {
         List<Faculty> faculties = facultyRepository.findAll();
@@ -59,4 +67,11 @@ public class StudentService {
         int currentIndex = lastAssignedFacultyIndex.getAndUpdate(i -> (i + 1) % faculties.size());
         return faculties.get(currentIndex);
     }
+
+    public StudentGroup findByGroupCode(String groupCode) {
+        return studentGroupRepository.findByGroupCode(groupCode);
+
+    }
+
+
 }

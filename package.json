@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@popperjs/core": "^2.11.8"
+  },
+  "devDependencies": {
+    "@types/babel__template": "^7.4.4"
+  }
+}
