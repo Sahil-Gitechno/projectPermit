@@ -29,20 +29,22 @@ public class FacultyController {
     }
 
     @PostMapping("facultyLogin")
-    public ResponseEntity<Map<String,Object>>login(@RequestBody FacultyRegistrationDTO loginDTO) {
-        boolean isAuthenticated = facultyService.authenticateFaculty(loginDTO.getEmailId(), loginDTO.getPassword());
-        if (isAuthenticated) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody FacultyRegistrationDTO loginDTO) {
+        Faculty faculty = facultyService.authenticateFaculty(loginDTO.getEmailId(), loginDTO.getPassword());
+        if (faculty != null) {
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("success", true);
+            response.put("facultyId", faculty.getfacultyId()); // Include faculty ID
+            response.put("role", faculty.getRole());           // Include role
+            response.put("name", faculty.getFirstName() + " " + faculty.getLastName()); // Optional: Include full name
 
             return ResponseEntity.ok(response);
         } else {
             Map<String, Object> response = new HashMap<>();
-            response.put("message", "Login failed");
+            response.put("message", "Invalid email or password");
             response.put("success", false);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
-
 }

@@ -44,7 +44,7 @@ public class FacultyService {
         faculty.setEmailId(facultyDTO.getEmailId());
         faculty.setMobileNumber(facultyDTO.getMobileNumber());
         faculty.setPassword(facultyDTO.getPassword());
-
+        faculty.setRole(facultyDTO.getRole());
         // Save faculty to the database
         facultyRepository.save(faculty);
 
@@ -53,12 +53,12 @@ public class FacultyService {
         response.put("success", true);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    public boolean authenticateFaculty(String emailId, String password) {
+    public Faculty authenticateFaculty(String emailId, String password) {
         Faculty faculty = facultyRepository.findByEmailId(emailId);
         if (faculty != null && faculty.getPassword().equals(password)) {
-            return true;
+            return faculty;
         }
-        return false;
+        return null;
     }
     }
 

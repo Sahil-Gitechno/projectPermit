@@ -1,6 +1,10 @@
 package com.ProjectPermit.project.Model;
+
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Table(name = "faculty")
 @Data
 @NoArgsConstructor
@@ -9,22 +13,38 @@ import lombok.*;
 
 public class Faculty {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long facultyCode ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long facultyId;
 
-        private String firstName;
-        private String lastName;
-        private String emailId;
-        private String mobileNumber;
-        private String password;
 
-    public Long getFacultyCode() {
-        return facultyCode;
+    private String role;
+
+    private String firstName;
+    private String lastName;
+    private String emailId;
+    private String mobileNumber;
+    private String password;
+
+
+    public String getRole() {
+        return role;
     }
 
-    public void setId(Long facultyCode) {
-        this.facultyCode = facultyCode;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Long getfacultyId() {
+        return facultyId;
+    }
+
+    public void setfacultyId(Long facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public void setId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     public String getFirstName() {
